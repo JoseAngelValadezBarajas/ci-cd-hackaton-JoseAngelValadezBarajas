@@ -73,7 +73,8 @@ def register_view(request):
         form = CustomUserCreationForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('login/')
+            messages.success(request, '¡Usuario creado con éxito!')  
+            return redirect(request.get_full_path())  
         else:
             return render(request, 'register.html', {'form': form})
     else:

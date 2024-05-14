@@ -3,6 +3,14 @@
 import django.db.models.deletion
 from django.db import migrations, models
 
+def create_roles(apps, schema_editor):
+    Role = apps.get_model('app', 'Role')  
+
+    Role.objects.bulk_create([
+        Role(id=1, name='Admin'),
+        Role(id=2, name='Consultor'),
+        Role(id=3, name='Ventas'),
+])
 
 class Migration(migrations.Migration):
 
@@ -59,4 +67,5 @@ class Migration(migrations.Migration):
                 'abstract': False,
             },
         ),
+        migrations.RunPython(create_roles),
     ]
