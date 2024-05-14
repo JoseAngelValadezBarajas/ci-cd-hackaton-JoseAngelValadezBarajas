@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Deleted</title>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/dashboard/">Projecto</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Mi perfil</a>
+                    </li>
+                    {% if role_id == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user-administration/">Usuarios</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Productos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="/administrar-productos/">Administrar</a>
+                              <a class="dropdown-item" href="/registrar-entrada/">Registrar Entrada</a>
+                              <a class="dropdown-item" href="/registrar_salida/">Registrar Salida</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
+                            </div>
+                        </li>
+                    {% elif role_id == 2 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registrar_salida/">Productos</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <span class="navbar-text ms-auto">Usuarios</span>
+            </div>
+        </nav>  
+                  
+    </header>
+    <h1>User Deleted</h1>
+    <p>El usuario ha sido eliminado correctamente.</p>
+</body>
+</html>

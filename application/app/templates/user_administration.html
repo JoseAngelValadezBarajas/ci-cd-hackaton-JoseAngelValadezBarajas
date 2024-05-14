@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Administration</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/dashboard/">Projecto</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Mi perfil</a>
+                    </li>
+                    {% if role_id == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user-administration/">Usuarios</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Productos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="/administrar-productos/">Administrar</a>
+                              <a class="dropdown-item" href="/registrar-entrada/">Registrar Entrada</a>
+                              <a class="dropdown-item" href="/registrar_salida/">Registrar Salida</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
+                            </div>
+                        </li>
+                    {% elif role_id == 2 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registrar_salida/">Productos</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <span class="navbar-text ms-auto">Usuarios</span>
+            </div>
+        </nav>  
+                  
+    </header>
+    <h1 class="text-center">User Administration</h1>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Usuarios</h2>
+                {% if users %}
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Nombre de usuario</th>
+                            <th>Correo electrónico</th>
+                            <th>Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for user in users %}
+                        <tr>
+                            <td>{{ user.username }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>{{ user.role_id }}</td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal{{ user.id }}" data-username="{{ user.username }}" data-email="{{ user.email }}" data-role="{{ user.role_id }}">
+                                    Editar
+                                </button>
+                                <form method="post" style="display: inline;">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="user_id" value="{{ user.id }}">
+                                    <button type="submit" class="btn btn-danger" name="delete_user" onclick="return confirm('¿Estás seguro de que deseas eliminar este usuario?')">Eliminar</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>No hay usuarios registrados.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals de edición para cada usuario -->
+    {% for user in users %}
+    <div class="modal fade" id="editUserModal{{ user.id }}" tabindex="-1" aria-labelledby="editUserModalLabel{{ user.id }}" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editUserModalLabel{{ user.id }}">Editar Usuario</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" id="editUserForm{{ user.id }}">
+                        {% csrf_token %}
+                        <input type="hidden" name="user_id" value="{{ user.id }}">
+                        <div class="mb-3">
+                            <label for="new_username{{ user.id }}" class="form-label">Nuevo nombre de usuario</label>
+                            <input type="text" class="form-control" id="new_username{{ user.id }}" name="new_username" placeholder="Nuevo nombre de usuario" value="{{ user.username }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new_email{{ user.id }}" class="form-label">Nuevo correo electrónico</label>
+                            <input type="email" class="form-control" id="new_email{{ user.id }}" name="new_email" placeholder="Nuevo correo electrónico" value="{{ user.email }}">
+                        </div>
+                        <div class="mb-3">
+                            <label for="new_role{{ user.id }}" class="form-label">Nuevo rol</label>
+                            <select class="form-select" id="new_role{{ user.id }}" name="new_role">
+                                <option value="1" {% if user.role_id == 1 %}selected{% endif %}>Admin</option>
+                                <option value="2" {% if user.role_id == 2 %}selected{% endif %}>Consultor</option>
+                                <option value="3" {% if user.role_id == 3 %}selected{% endif %}>Ventas</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary" name="edit_user">Guardar Cambios</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Script para actualizar los valores de los campos del formulario de edición cuando se abre el modal -->
+    <script>
+        $(document).ready(function() {
+            {% for user in users %}
+            $('#editUserModal{{ user.id }}').on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                var modal = $(this);
+                var username = button.data('username');
+                var email = button.data('email');
+                modal.find('#new_username{{ user.id }}').val(username);
+                modal.find('#new_email{{ user.id }}').val(email);
+            });
+            {% endfor %}
+        });
+    </script>
+</body>
+</html>
+
+
+
+
+

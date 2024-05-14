@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Información de Inventario</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .container {
+            margin-top: 50px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .product-info {
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        .product-info h2 {
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+        .product-info ul {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/dashboard/">Projecto</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Mi perfil</a>
+                    </li>
+                    {% if role_id == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user-administration/">Usuarios</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Productos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="/administrar-productos/">Administrar</a>
+                              <a class="dropdown-item" href="/registrar-entrada/">Registrar Entrada</a>
+                              <a class="dropdown-item" href="/registrar_salida/">Registrar Salida</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
+                            </div>
+                        </li>
+                    {% elif role_id == 2 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registrar_salida/">Productos</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <span class="navbar-text ms-auto">Inventario</span>
+            </div>
+        </nav>              
+    </header>
+    <div class="container">
+        <h1>Información de Inventario</h1>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-info">
+                    <h2>Entradas de Inventario:</h2>
+                    <ul>
+                        {% for entry in inventory_entries %}
+                            <li><strong>Producto:</strong> {{ entry.product.name }} <br>
+                                Cantidad Recibida: {{ entry.quantity_received }} <br>
+                                Fecha: {{ entry.date_received }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="product-info">
+                    <h2>Salidas de Inventario:</h2>
+                    <ul>
+                        {% for exit in inventory_exits %}
+                            <li><strong>Producto:</strong> {{ exit.product.name }} <br>
+                                Cantidad Vendida: {{ exit.quantity_sold }} <br>
+                                Fecha: {{ exit.date_sold }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="product-info">
+                    <h2>Productos con Stock Insuficiente:</h2>
+                    <ul>
+                        {% for insufficient_stock_product in insufficient_stock_products %}
+                            <li><strong>Producto:</strong> {{ insufficient_stock_product.product.name }} <br>
+                                Cantidad necesaria: {{ insufficient_stock_product.quantity_needed }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
+

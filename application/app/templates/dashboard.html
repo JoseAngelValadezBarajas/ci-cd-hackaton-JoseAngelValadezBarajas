@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="/dashboard/">Projecto</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/profile">Mi perfil</a>
+                    </li>
+                    {% if role_id == 1 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/user-administration/">Usuarios</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Productos
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                              <a class="dropdown-item" href="/administrar-productos/">Administrar</a>
+                              <a class="dropdown-item" href="/registrar-entrada/">Registrar Entrada</a>
+                              <a class="dropdown-item" href="/registrar_salida/">Registrar Salida</a>
+                              <div class="dropdown-divider"></div>
+                              <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
+                            </div>
+                        </li>
+                    {% elif role_id == 2 %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="/registrar_salida/">Productos</a>
+                        </li>
+                    {% endif %}
+                </ul>
+                <span class="navbar-text ms-auto">Dashboard</span>
+            </div>
+        </nav>  
+                  
+    </header>
+
+    <main>
+        <table id="inventory-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad Recibida</th>
+                    <th>Fecha de Recepción</th>
+                </tr>
+            </thead>
+            <tbody id="inventory-entries-body">
+            </tbody>
+        </table>
+
+        <table id="inventory-exits-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad Vendida</th>
+                    <th>Fecha de Venta</th>
+                </tr>
+            </thead>
+            <tbody id="inventory-exits-body">
+            </tbody>
+        </table>
+
+        <table id="insufficient-stock-table">
+            <thead>
+                <tr>
+                    <th>Producto</th>
+                    <th>Cantidad Necesaria</th>
+                </tr>
+            </thead>
+            <tbody id="insufficient-stock-body">
+            </tbody>
+        </table>
+    </main>
+
+    <script>
+        function fetchData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/informacion_inventario_dashboard/', true); 
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    populateTable(data);
+                }
+            };
+            xhr.send();
+        }
+        function populateTable(data) {
+            populateInventoryEntries(data.inventory_entries);
+            populateInventoryExits(data.inventory_exits);
+            populateInsufficientStock(data.insufficient_stock_products);
+        }
+        function populateInventoryEntries(entries) {
+            var tableBody = document.getElementById('inventory-entries-body');
+            entries.forEach(function(entry) {
+                var newRow = tableBody.insertRow(tableBody.rows.length);
+                newRow.insertCell(0).appendChild(document.createTextNode(entry.product__name));
+                newRow.insertCell(1).appendChild(document.createTextNode(entry.quantity_received));
+                newRow.insertCell(2).appendChild(document.createTextNode(entry.date_received));
+            });
+        }
+        function populateInventoryExits(exits) {
+            var tableBody = document.getElementById('inventory-exits-body');
+            exits.forEach(function(exit) {
+                var newRow = tableBody.insertRow(tableBody.rows.length);
+                newRow.insertCell(0).appendChild(document.createTextNode(exit.product__name));
+                newRow.insertCell(1).appendChild(document.createTextNode(exit.quantity_sold));
+                newRow.insertCell(2).appendChild(document.createTextNode(exit.date_sold));
+            });
+        }
+        function populateInsufficientStock(insufficientStock) {
+            var tableBody = document.getElementById('insufficient-stock-body');
+            insufficientStock.forEach(function(item) {
+                var newRow = tableBody.insertRow(tableBody.rows.length);
+                newRow.insertCell(0).appendChild(document.createTextNode(item.product__name));
+                newRow.insertCell(1).appendChild(document.createTextNode(item.quantity_needed));
+            });
+        }
+        window.onload = function() {
+            fetchData();
+        };
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
