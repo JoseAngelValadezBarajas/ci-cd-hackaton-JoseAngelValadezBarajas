@@ -39,10 +39,18 @@
                     {% endif %}
                 </ul>
                 <span class="navbar-text ms-auto">Inventario</span>
+                <a href="/login" class="btn btn-outline-danger">Logout</a>
             </div>
         </nav>  
                   
     </header>
+    {% if messages %}
+    <div class="alert alert-success" role="alert">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
     <div class="container">
         <h1 class="mt-5">Registrar Venta</h1>
         <form method="post">

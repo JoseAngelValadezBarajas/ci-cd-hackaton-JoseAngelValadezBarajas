@@ -1,14 +1,17 @@
 from django.contrib import admin
 from django.urls import path
+from django.shortcuts import redirect
 from app import views
 from app.views import profile_view, user_administration, administrar_productos, editar_producto
 from app.views import InsufficientStockListAPIView, InventoryEntryCreateAPIView, InventoryEntryListAPIView, InventoryExitCreateAPIView, InventoryExitListAPIView, ProductCreateAPIView, ProductDetailAPIView, ProductStockAPIView, UserEditAPIView, UserListAPIView, UserRoleChangeAPIView, get_product_stock, inventory_information, inventory_information_dashboard, login_view, register_inventory_entry, register_inventory_exit,register_view,dashboard_view
-
+def redirect_to_login(request):
+    return redirect('loginview') 
 
 urlpatterns = [
     ##Modelos Vistas
     path('admin/', admin.site.urls),
-    path('login/', login_view, name='login'),
+    path('', redirect_to_login, name='home'),
+    path('login/', login_view, name='loginview'),
     path('register/', register_view, name='register'),
     path('dashboard/', dashboard_view, name='dashboard'),
     path('profile/', profile_view, name='profile'),

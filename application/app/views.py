@@ -14,7 +14,7 @@ from .models import CustomUser, InsufficientStock, InventoryEntry, InventoryExit
 from .form import CustomUserCreationForm, CustomUserForm, InventoryEntryForm, InventoryExitForm, UserStatusForm, UserEditForm, ProductForm, StockForm
 from app.serializers import CustomUserSerializer, InsufficientStockSerializer, InventoryEntrySerializer, InventoryExitSerializer, LoginSerializer, ProductSerializer
 
-@csrf_exempt
+@login_required 
 def create_ticket(request):
     if request.method == 'POST':
         try:
@@ -27,14 +27,14 @@ def create_ticket(request):
             return JsonResponse({'error': str(e)}, status=400)
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
-
+@login_required 
 def get_tickets(request):
     if request.method == 'GET':
         tickets = Ticket.objects.all().values()
         return JsonResponse({'tickets': list(tickets)})
     else:
         return JsonResponse({'error': 'Método no permitido'}, status=405)
-
+@login_required 
 def get_ticket_details(request, ticket_id):
     if request.method == 'GET':
         try:
@@ -92,6 +92,7 @@ def profile_view(request):
         form = CustomUserForm(request.POST, instance=user)
         if form.is_valid():
             form.save()
+            messages.success(request, '¡El perfil se guardo exitosamente!')
             return redirect('profile')  
     else:
         form = CustomUserForm(instance=user)
@@ -148,15 +149,18 @@ def administrar_productos(request):
             product = Product.objects.get(pk=product_id)
             form = ProductForm(request.POST, instance=product)
             if form.is_valid():
+                messages.success(request, '¡El producto se edito exitosamente!')
                 form.save()
         elif 'delete_product_id' in request.POST:
             product_id = request.POST.get('delete_product_id')
             product = Product.objects.get(pk=product_id)
             product.delete()
+            messages.success(request, '¡El producto se borro exitosamente!')
         else:
             form = ProductForm(request.POST)
             if form.is_valid():
                 form.save()
+                messages.success(request, '¡El producto se añadio exitosamente!')
                 return redirect('administrar_productos')
 
     products = Product.objects.all()
@@ -169,6 +173,7 @@ def editar_producto(request, product_id):
         form = ProductForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
+            messages.success(request, '¡El producto se edito exitosamente!')
             return redirect('administrar_productos')
     else:
         form = ProductForm(instance=product)
@@ -238,6 +243,7 @@ def register_inventory_exit(request):
         form = InventoryExitForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, '¡La venta se registró exitosamente!')
             return redirect('register_inventory_exit')  
     else:
         form = InventoryExitForm()

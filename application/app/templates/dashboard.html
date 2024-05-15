@@ -41,6 +41,7 @@
                     {% endif %}
                 </ul>
                 <span class="navbar-text ms-auto">Dashboard</span>
+                <a href="/login" class="btn btn-outline-danger">Logout</a>
             </div>
         </nav>  
                   
@@ -99,14 +100,14 @@
     {% elif role_id == 2 %}
         <main>
             <main class="container text-center">
-                <button href="/informacion_inventario/" class="btn btn-secondary">Consulta Inventario</button>
+                <a href="/informacion_inventario" class="btn btn-secondary">Consulta Inventario</a>
             </main>
         </main>
     {% elif role_id == 3 %}
         <main>
             <main class="container text-center">
-                <button href="/registrar_salida/" class="btn btn-primary">Registra Venta</button>
-                <button href="/informacion_inventario/" class="btn btn-secondary">Consulta Inventario</button>
+                <a href="/registrar_salida/" class="btn btn-primary">Registra Venta</a>
+                <a href="/informacion_inventario/" class="btn btn-secondary">Consulta Inventario</a>
             </main>
         </main>
     {% endif %}
@@ -130,21 +131,23 @@
         }
         function populateInventoryEntries(entries) {
             var tableBody = document.getElementById('inventory-entries-body');
-            entries.forEach(function(entry) {
+            for (var i = 0; i < Math.min(entries.length, 2); i++) {
+                var entry = entries[i];
                 var newRow = tableBody.insertRow(tableBody.rows.length);
                 newRow.insertCell(0).appendChild(document.createTextNode(entry.product__name));
                 newRow.insertCell(1).appendChild(document.createTextNode(entry.quantity_received));
                 newRow.insertCell(2).appendChild(document.createTextNode(entry.date_received));
-            });
+            }
         }
         function populateInventoryExits(exits) {
             var tableBody = document.getElementById('inventory-exits-body');
-            exits.forEach(function(exit) {
+            for (var i = 0; i < Math.min(exits.length, 2); i++) {
+                var exit = exits[i];
                 var newRow = tableBody.insertRow(tableBody.rows.length);
                 newRow.insertCell(0).appendChild(document.createTextNode(exit.product__name));
                 newRow.insertCell(1).appendChild(document.createTextNode(exit.quantity_sold));
                 newRow.insertCell(2).appendChild(document.createTextNode(exit.date_sold));
-            });
+            }
         }
         function populateInsufficientStock(insufficientStock) {
             var tableBody = document.getElementById('insufficient-stock-body');
