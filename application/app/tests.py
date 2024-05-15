@@ -1,15 +1,13 @@
 from typing import Self
 from django.test import TestCase
-from django.contrib.auth import get_user_model
-from app.views import InsufficientStockListAPIView, InventoryEntryCreateAPIView, InventoryEntryListAPIView, InventoryExitCreateAPIView, InventoryExitListAPIView, ProductDetailAPIView, ProductStockAPIView
-from .serializers import CustomUserSerializer, LoginSerializer, ProfileSerializer, ProductSerializer, InventoryEntrySerializer, InventoryExitSerializer
-from .models import CustomUser, InsufficientStock, Product, InventoryEntry, InventoryExit, Role
-from django.utils import timezone
-from .form import CustomUserCreationForm, InventoryExitForm
 from rest_framework import status
+from django.utils import timezone
+from django.contrib.auth import get_user_model
+from .form import CustomUserCreationForm, InventoryExitForm
 from rest_framework.test import APIClient, force_authenticate, APIRequestFactory
-
-
+from .models import CustomUser, InsufficientStock, Product, InventoryEntry, InventoryExit, Role
+from .serializers import CustomUserSerializer, LoginSerializer, ProfileSerializer, ProductSerializer, InventoryEntrySerializer, InventoryExitSerializer
+from app.views import InsufficientStockListAPIView, InventoryEntryCreateAPIView, InventoryEntryListAPIView, InventoryExitCreateAPIView, InventoryExitListAPIView, ProductDetailAPIView, ProductStockAPIView
 
 ##Test para user
 
@@ -286,7 +284,6 @@ class TestForms(TestCase):
         self.assertEqual(form.errors['__all__'], ['No hay suficiente stock disponible para esta salida de inventario.'])
 
 ##Test Para API
-#AQUI HABIA UN USER MODEL
 class TestLogin(TestCase):
     def setUp(self):
         self.role = Role.objects.create(id=1, name='Test Role')  

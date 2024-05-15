@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import CustomUser, InsufficientStock, InventoryEntry, InventoryExit, Product
 from django.contrib.auth import authenticate
+from .models import CustomUser, InsufficientStock, InventoryEntry, InventoryExit, Product
+
 
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:

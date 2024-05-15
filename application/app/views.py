@@ -1,20 +1,18 @@
-import json
+from rest_framework import status
 from django.contrib import messages
-from django.contrib.auth.models import User
-from django.contrib.auth.decorators import login_required
-from django.http import Http404, HttpResponse, JsonResponse
-from django.shortcuts import get_object_or_404, render, redirect
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from django.http import Http404, JsonResponse
+from rest_framework.decorators import api_view
 from django.contrib.auth import authenticate, login
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404, render, redirect
 from .models import CustomUser, InsufficientStock, InventoryEntry, InventoryExit, Ticket, Product
-from app.serializers import CustomUserSerializer, InsufficientStockSerializer, InventoryEntrySerializer, InventoryExitSerializer, LoginSerializer, ProductSerializer
 from .form import CustomUserCreationForm, CustomUserForm, InventoryEntryForm, InventoryExitForm, UserStatusForm, UserEditForm, ProductForm, StockForm
+from app.serializers import CustomUserSerializer, InsufficientStockSerializer, InventoryEntrySerializer, InventoryExitSerializer, LoginSerializer, ProductSerializer
 
 @csrf_exempt
 def create_ticket(request):
@@ -144,7 +142,6 @@ def user_administration(request):
 @login_required  
 def administrar_productos(request):
     form = ProductForm()
-
     if request.method == 'POST':
         if 'edit_product_id' in request.POST:
             product_id = request.POST.get('edit_product_id')
@@ -200,16 +197,26 @@ def get_product_stock(request, product_id):
 
 @login_required
 def inventory_information_dashboard(request):
+    products = Product.objects.all()
     inventory_entries = InventoryEntry.objects.all().values('product__name', 'quantity_received', 'date_received')
     inventory_exits = InventoryExit.objects.all().values('product__name', 'quantity_sold', 'date_sold')
     insufficient_stock_products = InsufficientStock.objects.all().values('product__name', 'quantity_needed')
     inventory_entries_list = list(inventory_entries)
     inventory_exits_list = list(inventory_exits)
     insufficient_stock_products_list = list(insufficient_stock_products)
+    products_with_insufficient_stock = []
+    for product in products:
+        stockTotal=0
+        for stock in inventory_exits_list:
+            if product.name == stock['product__name']:
+                stockTotal += stock['quantity_sold']
+        profit = stockTotal * product.price
+        products_with_insufficient_stock.append({'product_name': product.name,'profit': profit,'quantity_sold': stockTotal,'price': product.price}) 
     data = {
         'inventory_entries': inventory_entries_list,
         'inventory_exits': inventory_exits_list,
-        'insufficient_stock_products': insufficient_stock_products_list
+        'insufficient_stock_products': insufficient_stock_products_list,
+        'products_with_insufficient_stock': products_with_insufficient_stock
     }
     return JsonResponse(data)
 
@@ -275,7 +282,6 @@ class ProfileDetailView(APIView):
         user = request.user
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
-
 class ProfileEditView(APIView):
     permission_classes = [IsAuthenticated]
     

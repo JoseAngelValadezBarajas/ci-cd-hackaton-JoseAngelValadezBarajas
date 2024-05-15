@@ -1,10 +1,12 @@
 from django.contrib import admin
 from django.urls import path
 from app import views
-from app.views import InsufficientStockListAPIView, InventoryEntryCreateAPIView, InventoryEntryListAPIView, InventoryExitCreateAPIView, InventoryExitListAPIView, ProductCreateAPIView, ProductDetailAPIView, ProductStockAPIView, UserEditAPIView, UserListAPIView, UserRoleChangeAPIView, get_product_stock, inventory_information, inventory_information_dashboard, login_view, register_inventory_entry, register_inventory_exit,register_view,dashboard_view
 from app.views import profile_view, user_administration, administrar_productos, editar_producto
+from app.views import InsufficientStockListAPIView, InventoryEntryCreateAPIView, InventoryEntryListAPIView, InventoryExitCreateAPIView, InventoryExitListAPIView, ProductCreateAPIView, ProductDetailAPIView, ProductStockAPIView, UserEditAPIView, UserListAPIView, UserRoleChangeAPIView, get_product_stock, inventory_information, inventory_information_dashboard, login_view, register_inventory_entry, register_inventory_exit,register_view,dashboard_view
+
 
 urlpatterns = [
+    ##Modelos Vistas
     path('admin/', admin.site.urls),
     path('login/', login_view, name='login'),
     path('register/', register_view, name='register'),

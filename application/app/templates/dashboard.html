@@ -5,6 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        .insufficient-stock-table tbody tr:nth-child(even) {
+          background-color: #ffc7c7; 
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -32,9 +37,7 @@
                             </div>
                         </li>
                     {% elif role_id == 2 %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="/registrar_salida/">Productos</a>
-                        </li>
+
                     {% endif %}
                 </ul>
                 <span class="navbar-text ms-auto">Dashboard</span>
@@ -42,44 +45,71 @@
         </nav>  
                   
     </header>
-
-    <main>
-        <table id="inventory-table">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad Recibida</th>
-                    <th>Fecha de Recepción</th>
-                </tr>
-            </thead>
-            <tbody id="inventory-entries-body">
-            </tbody>
-        </table>
-
-        <table id="inventory-exits-table">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad Vendida</th>
-                    <th>Fecha de Venta</th>
-                </tr>
-            </thead>
-            <tbody id="inventory-exits-body">
-            </tbody>
-        </table>
-
-        <table id="insufficient-stock-table">
-            <thead>
-                <tr>
-                    <th>Producto</th>
-                    <th>Cantidad Necesaria</th>
-                </tr>
-            </thead>
-            <tbody id="insufficient-stock-body">
-            </tbody>
-        </table>
-    </main>
-
+    {% if role_id == 1 %}
+        <main>
+            <div class="container">
+                <h2>Ultimas Entradas de Inventario</h2>
+                <table id="inventory-table" class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Producto</th>
+                      <th>Cantidad Recibida</th>
+                      <th>Fecha de Recepción</th>
+                    </tr>
+                  </thead>
+                  <tbody id="inventory-entries-body">
+                  </tbody>
+                </table>
+                <h2>Ultimas Salidas de Inventario</h2>
+                <table id="inventory-exits-table" class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Producto</th>
+                      <th>Cantidad Vendida</th>
+                      <th>Fecha de Venta</th>
+                    </tr>
+                  </thead>
+                  <tbody id="inventory-exits-body">
+                  </tbody>
+                </table>
+                <h2>Stock Insuficiente</h2>
+                <table id="insufficient-stock-table" class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Producto</th>
+                      <th>Cantidad Necesaria</th>
+                    </tr>
+                  </thead>
+                  <tbody id="insufficient-stock-body">
+                  </tbody>
+                </table>
+                <h2>Ganancias Por Producto</h2>
+                <table id="profit-stock-table" class="table table-striped">
+                  <thead class="thead-dark">
+                    <tr>
+                      <th>Producto</th>
+                      <th>Ganancia</th>
+                    </tr>
+                  </thead>
+                  <tbody id="profit-stock-body">
+                  </tbody>
+                </table>
+            </div>
+        </main>
+    {% elif role_id == 2 %}
+        <main>
+            <main class="container text-center">
+                <button href="/informacion_inventario/" class="btn btn-secondary">Consulta Inventario</button>
+            </main>
+        </main>
+    {% elif role_id == 3 %}
+        <main>
+            <main class="container text-center">
+                <button href="/registrar_salida/" class="btn btn-primary">Registra Venta</button>
+                <button href="/informacion_inventario/" class="btn btn-secondary">Consulta Inventario</button>
+            </main>
+        </main>
+    {% endif %}
     <script>
         function fetchData() {
             var xhr = new XMLHttpRequest();
@@ -96,6 +126,7 @@
             populateInventoryEntries(data.inventory_entries);
             populateInventoryExits(data.inventory_exits);
             populateInsufficientStock(data.insufficient_stock_products);
+            populateProfitStock(data.products_with_insufficient_stock);
         }
         function populateInventoryEntries(entries) {
             var tableBody = document.getElementById('inventory-entries-body');
@@ -121,6 +152,14 @@
                 var newRow = tableBody.insertRow(tableBody.rows.length);
                 newRow.insertCell(0).appendChild(document.createTextNode(item.product__name));
                 newRow.insertCell(1).appendChild(document.createTextNode(item.quantity_needed));
+            });
+        }
+        function populateProfitStock(profit) {
+            var tableBody = document.getElementById('profit-stock-body');
+            profit.forEach(function(item) {
+                var newRow = tableBody.insertRow(tableBody.rows.length);
+                newRow.insertCell(0).appendChild(document.createTextNode(item.product_name));
+                newRow.insertCell(1).appendChild(document.createTextNode(item.profit));
             });
         }
         window.onload = function() {
