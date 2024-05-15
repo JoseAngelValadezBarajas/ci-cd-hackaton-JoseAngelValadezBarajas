@@ -33,7 +33,7 @@
                               <a class="dropdown-item" href="/new_inventory/">Registrar Entrada</a>
                               <a class="dropdown-item" href="/sales/">Registrar Salida</a>
                               <div class="dropdown-divider"></div>
-                              <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
+                              <a class="dropdown-item" href="/inventory_information/">Consulta General</a>
                             </div>
                         </li>
                     {% elif role_id == 2 %}
@@ -107,14 +107,14 @@
         <main>
             <main class="container text-center">
                 <a href="/sales/" class="btn btn-primary">Registra Venta</a>
-                <a href="/informacion_inventario/" class="btn btn-secondary">Consulta Inventario</a>
+                <a href="/inventory_information/" class="btn btn-secondary">Consulta Inventario</a>
             </main>
         </main>
     {% endif %}
     <script>
         function fetchData() {
             var xhr = new XMLHttpRequest();
-            xhr.open('GET', '/informacion_inventario_dashboard/', true); 
+            xhr.open('GET', '/inventory_information_dashboard/', true); 
             xhr.onreadystatechange = function() {
                 if (xhr.readyState === 4 && xhr.status === 200) {
                     var data = JSON.parse(xhr.responseText);
