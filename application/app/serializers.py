@@ -6,7 +6,7 @@ from .models import CustomUser, InsufficientStock, InventoryEntry, InventoryExit
 class CustomUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['email', 'username', 'first_name', 'last_name', 'address', 'password']
+        fields = ['id','email', 'username', 'first_name', 'last_name', 'address','role_id', 'password']
         extra_kwargs = {'password': {'write_only': True}}
 
     def create(self, validated_data):

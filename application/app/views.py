@@ -141,7 +141,7 @@ def user_administration(request):
     return render(request, 'user_administration.html', {'users': users, 'form_status': form_status, 'form_edit': form_edit})
 
 @login_required  
-def administrar_productos(request):
+def control_products(request):
     if request.user.role_id == 2:
         return redirect('dashboard') 
     
@@ -164,13 +164,13 @@ def administrar_productos(request):
             if form.is_valid():
                 form.save()
                 messages.success(request, '¡El producto se añadio exitosamente!')
-                return redirect('administrar_productos')
+                return redirect('control_products')
 
     products = Product.objects.all()
-    return render(request, 'administrar_productos.html', {'products': products, 'form': form})
+    return render(request, 'control_products.html', {'products': products, 'form': form})
 
 @login_required  
-def editar_producto(request, product_id):
+def edit_product(request, product_id):
     if request.user.role_id == 2:
         return redirect('dashboard') 
     product = get_object_or_404(Product, pk=product_id)
@@ -179,11 +179,11 @@ def editar_producto(request, product_id):
         if form.is_valid():
             form.save()
             messages.success(request, '¡El producto se edito exitosamente!')
-            return redirect('administrar_productos')
+            return redirect('control_products')
     else:
         form = ProductForm(instance=product)
     
-    return render(request, 'editar_producto.html', {'form': form})
+    return render(request, 'edit_product.html', {'form': form})
 
 @login_required  
 def modificar_stock(request, product_id):
@@ -194,7 +194,7 @@ def modificar_stock(request, product_id):
         form = StockForm(request.POST, instance=product)
         if form.is_valid():
             form.save()
-            return redirect('administrar_productos')
+            return redirect('control_products')
     else:
         form = StockForm(instance=product)
     return render(request, 'modificar_stock.html', {'form': form})

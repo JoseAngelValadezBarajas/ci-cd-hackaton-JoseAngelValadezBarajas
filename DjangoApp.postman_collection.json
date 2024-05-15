@@ -1,0 +1,518 @@
+{
+	"info": {
+		"_postman_id": "32f80060-c791-4590-872e-2ae03d1f87c8",
+		"name": "DjangoApp",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27502231"
+	},
+	"item": [
+		{
+			"name": "LoginApi",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "email",
+							"value": "test@test.com",
+							"type": "default"
+						},
+						{
+							"key": "password",
+							"value": "test",
+							"type": "default"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/login/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"login",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMyProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/profile/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditMyProfile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"first_name\": \"test\",\r\n    \"last_name\": \"test\",\r\n    \"address\": \"testAPI\"\r\n}\r\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/profile/edit/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"profile",
+						"edit",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetUsers",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/users/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditUser",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"testAPI@testAPI.com\",\r\n    \"username\": \"testAPI\",\r\n    \"first_name\": \"testAPI\",\r\n    \"last_name\": \"test3\",\r\n    \"address\": \"test3\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/users/4/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"4",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "EditRole",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"role_id\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/users/2/change-role/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"users",
+						"2",
+						"change-role",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CrearProducto",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Producto de ejemplo\",\r\n    \"description\": \"Descripción del producto\",\r\n    \"stock\": 10,\r\n    \"min_stock\": 5,\r\n    \"price\": 99.99\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/products/create/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "RevisarProducto",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/products/5/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"5",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "VentaDeProductos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product\": 2,\r\n    \"quantity_sold\": 5\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/inventory/exit/create/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"inventory",
+						"exit",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultarEntradasInventario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/inventory/entries/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"inventory",
+						"entries",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "IngresarStock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"product\": 2,\r\n    \"quantity_received\": 19\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/inventory/entry/create/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"inventory",
+						"entry",
+						"create",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultarStock",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/products/2/stock/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"products",
+						"2",
+						"stock",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultarSalidasInventario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/inventory/exits/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"inventory",
+						"exits",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "ConsultarInsificienteInventario",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzE1ODkyNjY4LCJpYXQiOjE3MTU4MDYyNjgsImp0aSI6IjFhNzVmYzY1NjIwYTQ5YWRhMDE4NDE2ZTlmMzJkMzRjIiwidXNlcl9pZCI6MX0.F38Tx4b3nX0nEYplQQl0ZkvBcxZnZNXeibgQ4dvGqTU",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/inventory/insufficient/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"inventory",
+						"insufficient",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

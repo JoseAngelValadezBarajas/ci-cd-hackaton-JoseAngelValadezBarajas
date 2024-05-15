@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.shortcuts import redirect
 from app import views
-from app.views import inventory_consult, inventory_consult_data, profile_view, user_administration, administrar_productos, editar_producto
+from app.views import inventory_consult, inventory_consult_data, profile_view, user_administration, control_products, edit_product
 from app.views import InsufficientStockListAPIView, InventoryEntryCreateAPIView, InventoryEntryListAPIView, InventoryExitCreateAPIView, InventoryExitListAPIView, ProductCreateAPIView, ProductDetailAPIView, ProductStockAPIView, UserEditAPIView, UserListAPIView, UserRoleChangeAPIView, get_product_stock, inventory_information, inventory_information_dashboard, login_view, register_inventory_entry, register_inventory_exit,register_view,dashboard_view
 def redirect_to_login(request):
     return redirect('loginview') 
@@ -16,8 +16,8 @@ urlpatterns = [
     path('dashboard/', dashboard_view, name='dashboard'),
     path('profile/', profile_view, name='profile'),
     path('user-administration/', user_administration, name='user_administration'),
-    path('control_products/', administrar_productos, name='control_products'),
-    path('editar_producto/<int:product_id>/', editar_producto, name='editar_producto'),
+    path('control_products/', control_products, name='control_products'),
+    path('edit_product/<int:product_id>/', edit_product, name='edit_product'),
     path('get_product_stock/<int:product_id>/', get_product_stock, name='get_product_stock'),
     path('new_inventory/', register_inventory_entry, name='register_inventory_entry'),
     path('sales/', register_inventory_exit, name='register_inventory_exit'),

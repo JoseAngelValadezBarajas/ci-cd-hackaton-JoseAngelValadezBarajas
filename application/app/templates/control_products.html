@@ -61,7 +61,7 @@
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form id="agregarProductoForm" method="post" action="{% url 'administrar_productos' %}">
+                    <form id="agregarProductoForm" method="post" action="{% url 'control_products' %}">
                         {% csrf_token %}
                         <div class="modal-body">
                             <label for="name">Nombre:</label>
@@ -103,8 +103,8 @@
                     <td>{{ product.min_stock }}</td>
                     <td>{{ product.price }}</td>
                     <td>
-                        <a href="{% url 'editar_producto' product.id %}" class="btn btn-primary btn-sm">Editar</a>
-                        <form method="post" action="{% url 'administrar_productos' %}">
+                        <a href="{% url 'edit_product' product.id %}" class="btn btn-primary btn-sm">Editar</a>
+                        <form method="post" action="{% url 'control_products' %}">
                             {% csrf_token %}
                             <input type="hidden" name="delete_product_id" value="{{ product.id }}">
                             <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
