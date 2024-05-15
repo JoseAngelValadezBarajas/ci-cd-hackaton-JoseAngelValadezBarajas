@@ -2,7 +2,7 @@ from django.contrib import admin
 from django.urls import path
 from django.shortcuts import redirect
 from app import views
-from app.views import profile_view, user_administration, administrar_productos, editar_producto
+from app.views import inventory_consult, inventory_consult_data, profile_view, user_administration, administrar_productos, editar_producto
 from app.views import InsufficientStockListAPIView, InventoryEntryCreateAPIView, InventoryEntryListAPIView, InventoryExitCreateAPIView, InventoryExitListAPIView, ProductCreateAPIView, ProductDetailAPIView, ProductStockAPIView, UserEditAPIView, UserListAPIView, UserRoleChangeAPIView, get_product_stock, inventory_information, inventory_information_dashboard, login_view, register_inventory_entry, register_inventory_exit,register_view,dashboard_view
 def redirect_to_login(request):
     return redirect('loginview') 
@@ -16,13 +16,15 @@ urlpatterns = [
     path('dashboard/', dashboard_view, name='dashboard'),
     path('profile/', profile_view, name='profile'),
     path('user-administration/', user_administration, name='user_administration'),
-    path('administrar-productos/', administrar_productos, name='administrar_productos'),
+    path('control_products/', administrar_productos, name='administrar_productos'),
     path('editar_producto/<int:product_id>/', editar_producto, name='editar_producto'),
     path('get_product_stock/<int:product_id>/', get_product_stock, name='get_product_stock'),
-    path('registrar-entrada/', register_inventory_entry, name='register_inventory_entry'),
-    path('registrar_salida/', register_inventory_exit, name='register_inventory_exit'),
+    path('new_inventory/', register_inventory_entry, name='register_inventory_entry'),
+    path('sales/', register_inventory_exit, name='register_inventory_exit'),
     path('informacion_inventario/', inventory_information, name='inventory_information'),
     path('informacion_inventario_dashboard/', inventory_information_dashboard, name='inventory_information_dashboard'),
+    path('inventory_consult/', inventory_consult, name='inventory_consult'),
+    path('inventory_consult_data/', inventory_consult_data, name='inventory_consult_data'),
     ##Modelos de API 
     path('api/register/', views.register, name='register'),
     path('api/login/', views.loginapi, name='login'),

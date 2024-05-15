@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registrar Entrada de Inventario</title>
+    <title>Registrar Salida de Inventario</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
@@ -31,7 +32,7 @@
                               <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
                             </div>
                         </li>
-                    {% elif role_id == 2 %}
+                    {% elif role_id == 3 %}
                         <li class="nav-item">
                             <a class="nav-link" href="/sales/">Productos</a>
                         </li>
@@ -40,29 +41,53 @@
                 <span class="navbar-text ms-auto">Inventario</span>
                 <a href="/login" class="btn btn-outline-danger">Logout</a>
             </div>
-        </nav>               
+        </nav>  
+                  
     </header>
-    {% if messages %}
-    <div class="alert alert-success" role="alert">
-        {% for message in messages %}
-        {{ message }}
-        {% endfor %}
-    </div>
-    {% endif %}
     <div class="container">
-        <h1 class="mt-5">Registrar Entrada de Inventario</h1>
-        <form method="post">
-            {% csrf_token %}
-            <div class="form-group">
-                <label for="id_product">Producto:</label>
-                {{ form.product }}
-            </div>
-            <div class="form-group">
-                <label for="id_quantity_received">Cantidad Recibida:</label>
-                {{ form.quantity_received }}
-            </div>
-            <button type="submit" class="btn btn-primary">Registrar Entrada</button>
-        </form>
+        <h2>Stock</h2>
+        <table id="inventory-table" class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th>Producto</th>
+              <th>Stock</th>
+            </tr>
+          </thead>
+          <tbody id="inventory">
+          </tbody>
+        </table>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        function fetchData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/inventory_consult_data/', true); 
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === 4 && xhr.status === 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    populateTable(data);
+                }
+            };
+            xhr.send();
+        }
+        function populateTable(data) {
+            populateInventory(data.inventory);
+        }
+        function populateInventory(entries) {
+            var tableBody = document.getElementById('inventory');
+            entries.forEach(function(entry) {
+                var newRow = tableBody.insertRow(tableBody.rows.length);
+                newRow.insertCell(0).appendChild(document.createTextNode(entry.name));
+                newRow.insertCell(1).appendChild(document.createTextNode(entry.stock));
+            });
+        }
+        window.onload = function() {
+            fetchData();
+        };
+    </script>
 </body>
 </html>

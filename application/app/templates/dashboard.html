@@ -29,9 +29,9 @@
                               Productos
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                              <a class="dropdown-item" href="/administrar-productos/">Administrar</a>
-                              <a class="dropdown-item" href="/registrar-entrada/">Registrar Entrada</a>
-                              <a class="dropdown-item" href="/registrar_salida/">Registrar Salida</a>
+                              <a class="dropdown-item" href="/control_products/">Administrar</a>
+                              <a class="dropdown-item" href="/new_inventory/">Registrar Entrada</a>
+                              <a class="dropdown-item" href="/sales/">Registrar Salida</a>
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
                             </div>
@@ -100,13 +100,13 @@
     {% elif role_id == 2 %}
         <main>
             <main class="container text-center">
-                <a href="/informacion_inventario" class="btn btn-secondary">Consulta Inventario</a>
+                <a href="/inventory_consult/" class="btn btn-secondary">Consulta Inventario</a>
             </main>
         </main>
     {% elif role_id == 3 %}
         <main>
             <main class="container text-center">
-                <a href="/registrar_salida/" class="btn btn-primary">Registra Venta</a>
+                <a href="/sales/" class="btn btn-primary">Registra Venta</a>
                 <a href="/informacion_inventario/" class="btn btn-secondary">Consulta Inventario</a>
             </main>
         </main>

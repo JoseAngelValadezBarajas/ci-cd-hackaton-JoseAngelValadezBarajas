@@ -25,15 +25,15 @@
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                               <a class="dropdown-item" href="/administrar-productos/">Administrar</a>
-                              <a class="dropdown-item" href="/registrar-entrada/">Registrar Entrada</a>
-                              <a class="dropdown-item" href="/registrar_salida/">Registrar Salida</a>
+                              <a class="dropdown-item" href="/new_inventory/">Registrar Entrada</a>
+                              <a class="dropdown-item" href="/sales/">Registrar Salida</a>
                               <div class="dropdown-divider"></div>
                               <a class="dropdown-item" href="/informacion_inventario/">Consulta General</a>
                             </div>
                         </li>
                     {% elif role_id == 2 %}
                         <li class="nav-item">
-                            <a class="nav-link" href="/registrar_salida/">Productos</a>
+                            <a class="nav-link" href="/sales/">Productos</a>
                         </li>
                     {% endif %}
                 </ul>
@@ -51,9 +51,7 @@
     {% endif %}
     <div class="container">
         <h1 class="mt-5">Administrar Productos</h1>
-
         <button type="button" class="btn btn-primary mt-3" data-toggle="modal" data-target="#agregarProductoModal">Agregar Producto</button>
-
         <div class="modal fade" id="agregarProductoModal" tabindex="-1" role="dialog" aria-labelledby="agregarProductoModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
@@ -85,24 +83,37 @@
                 </div>
             </div>
         </div>
-
-        <ul class="list-group mt-3">
-            {% for product in products %}
-            <li class="list-group-item">
-                <h5>{{ product.name }}</h5>
-                <p>{{ product.description }}</p>
-                <p>Stock: {{ product.stock }}</p>
-                <p>Stock Mínimo: {{ product.min_stock }}</p>
-                <p>Precio: {{ product.price }}</p>
-                <a href="{% url 'editar_producto' product.id %}" class="btn btn-primary btn-sm">Editar</a>
-                <form method="post" action="{% url 'administrar_productos' %}">
-                    {% csrf_token %}
-                    <input type="hidden" name="delete_product_id" value="{{ product.id }}">
-                    <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
-                </form>
-            </li>
-            {% endfor %}
-        </ul>
+        <table class="table mt-3">
+            <thead>
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Stock</th>
+                    <th scope="col">Stock Mínimo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for product in products %}
+                <tr>
+                    <td>{{ product.name }}</td>
+                    <td>{{ product.description }}</td>
+                    <td>{{ product.stock }}</td>
+                    <td>{{ product.min_stock }}</td>
+                    <td>{{ product.price }}</td>
+                    <td>
+                        <a href="{% url 'editar_producto' product.id %}" class="btn btn-primary btn-sm">Editar</a>
+                        <form method="post" action="{% url 'administrar_productos' %}">
+                            {% csrf_token %}
+                            <input type="hidden" name="delete_product_id" value="{{ product.id }}">
+                            <button type="submit" class="btn btn-danger btn-sm">Eliminar</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>

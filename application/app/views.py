@@ -260,6 +260,19 @@ def register_inventory_exit(request):
         form = InventoryExitForm()
     return render(request, 'register_inventory_exit.html', {'form': form})
 
+@login_required  
+def inventory_consult_data(request):
+    products = Product.objects.all().values('name', 'stock')
+    productsList = list(products)
+    data={'inventory': productsList}
+    return JsonResponse(data)
+
+@login_required  
+def inventory_consult(request):
+    user = request.user
+    user_type = user.role_id
+    return render(request, 'inventory_consult.html', {'role_id': user_type})
+
 @login_required 
 def inventory_information(request):
     inventory_entries = InventoryEntry.objects.all()
