@@ -142,6 +142,9 @@ def user_administration(request):
 
 @login_required  
 def administrar_productos(request):
+    if request.user.role_id == 2:
+        return redirect('dashboard') 
+    
     form = ProductForm()
     if request.method == 'POST':
         if 'edit_product_id' in request.POST:
@@ -168,6 +171,8 @@ def administrar_productos(request):
 
 @login_required  
 def editar_producto(request, product_id):
+    if request.user.role_id == 2:
+        return redirect('dashboard') 
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         form = ProductForm(request.POST, instance=product)
@@ -182,6 +187,8 @@ def editar_producto(request, product_id):
 
 @login_required  
 def modificar_stock(request, product_id):
+    if request.user.role_id == 2:
+        return redirect('dashboard') 
     product = get_object_or_404(Product, pk=product_id)
     if request.method == 'POST':
         form = StockForm(request.POST, instance=product)
@@ -227,6 +234,8 @@ def inventory_information_dashboard(request):
 
 @login_required     
 def register_inventory_entry(request):
+    if request.user.role_id == 2:
+        return redirect('dashboard') 
     if request.method == 'POST':
         form = InventoryEntryForm(request.POST)
         if form.is_valid():
@@ -239,6 +248,8 @@ def register_inventory_entry(request):
 
 @login_required  
 def register_inventory_exit(request):
+    if request.user.role_id == 2:
+        return redirect('dashboard') 
     if request.method == 'POST':
         form = InventoryExitForm(request.POST)
         if form.is_valid():
@@ -283,7 +294,6 @@ def loginapi(request):
     
 class ProfileDetailView(APIView):
     permission_classes = [IsAuthenticated]
-    
     def get(self, request):
         user = request.user
         serializer = CustomUserSerializer(user)
@@ -301,7 +311,6 @@ class ProfileEditView(APIView):
     
 class UserListAPIView(APIView):
     permission_classes = [IsAuthenticated]
-
     def get(self, request):
         if request.user.role_id != 1:
             return Response({"error": "Unauthorized"}, status=403)
