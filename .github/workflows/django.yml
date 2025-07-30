@@ -43,8 +43,8 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ AKIAUNWJ26E7GL7UYK3Z }}
-          aws-secret-access-key: ${{ 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 }}
+          aws-access-key-id: AKIAUNWJ26E7GL7UYK3Z
+          aws-secret-access-key: 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
           aws-region: us-east-1
       - name: Deploy to S3
         run: aws s3 sync ./dist s3://bucket-hackathon-lexisnexis --delete
