@@ -27,7 +27,7 @@ jobs:
         pip install -r application/requirements.txt
     - name: Run Tests
       run: |
-        python manage.py test
+        python application/manage.py test
 
 
   deploy-s3:
