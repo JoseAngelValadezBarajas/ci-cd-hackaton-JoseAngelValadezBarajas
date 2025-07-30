@@ -45,4 +45,4 @@ jobs:
           aws-secret-access-key: z33WEZDjn2bDK3uEEUPUzSvM6x/ACdivSRB+zUk2
           aws-region: us-east-1
       - name: Deploy to S3
-        run: aws s3 sync ./dist s3://bucket-hackathon-lexisnexis --delete
+        run: aws s3 sync ./application s3://bucket-hackathon-lexisnexis --delete
